@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 40" width="160" height="40" fill="none">
+  <!-- Polygon Geometry Symbol -->
+  <polygon points="12,28 24,10 36,18 28,34" stroke="#2563EB" stroke-width="2.5" fill="#2563EB" fill-opacity="0.15" stroke-linejoin="round"/>
+  <circle cx="24" cy="10" r="2.5" fill="#2563EB"/>
+  <circle cx="36" cy="18" r="2.5" fill="#16A34A"/>
+  <circle cx="28" cy="34" r="2.5" fill="#D97706"/>
+  <circle cx="12" cy="28" r="2.5" fill="#2563EB"/>
+  <!-- Wordmark -->
+  <text x="46" y="27" font-family="Inter, sans-serif" font-size="20" font-weight="700" fill="#111827" letter-spacing="-0.02em">AAKAR</text>
+</svg>

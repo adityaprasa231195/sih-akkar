@@ -1,0 +1,98 @@
+services:
+  db:
+    image: postgis/postgis:15-3.3
+    container_name: aakar_db
+    environment:
+      POSTGRES_DB: aakar_cadastral
+      POSTGRES_USER: aakar_admin
+      POSTGRES_PASSWORD: aakar_secure_password_2026
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - aakar_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U aakar_admin -d aakar_cadastral"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: aakar_redis
+    networks:
+      - aakar_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: aakar_backend
+    environment:
+      DATABASE_URL: postgresql://aakar_admin:aakar_secure_password_2026@db:5432/aakar_cadastral
+      REDIS_URL: redis://redis:6379/0
+      SECRET_KEY: aakar-jwt-production-secret-token-key-2026
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - aakar_network
+    restart: unless-stopped
+
+  worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: aakar_celery_worker
+    command: python -m app.main
+    environment:
+      DATABASE_URL: postgresql://aakar_admin:aakar_secure_password_2026@db:5432/aakar_cadastral
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      backend:
+        condition: service_started
+    networks:
+      - aakar_network
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: aakar_frontend
+    networks:
+      - aakar_network
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:alpine
+    container_name: aakar_nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - aakar_network
+    restart: unless-stopped
+
+networks:
+  aakar_network:
+    driver: bridge
+
+volumes:
+  postgres_data:

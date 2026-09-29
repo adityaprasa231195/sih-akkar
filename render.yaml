@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: aakar-backend
+    env: python
+    region: singapore
+    buildCommand: pip install -r AAKAR/backend/requirements.txt
+    startCommand: uvicorn AAKAR.backend.app.main:app --host 0.0.0.0 --port $PORT

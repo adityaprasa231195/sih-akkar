@@ -1,0 +1,6 @@
+search-path = [
+  ".",
+  "C:/Users/study/AppData/Roaming/Python/Python310/site-packages",
+  "C:/Program Files/Python310/lib/site-packages"
+]
+python-interpreter-path = "C:/Program Files/Python310/python.exe"

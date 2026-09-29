@@ -1,0 +1,16 @@
+{
+  "python.defaultInterpreterPath": "C:\\Program Files\\Python310\\python.exe",
+  "python.pythonPath": "C:\\Program Files\\Python310\\python.exe",
+  "python.analysis.extraPaths": [
+    "${workspaceFolder}",
+    "C:/Users/study/AppData/Roaming/Python/Python310/site-packages",
+    "C:/Program Files/Python310/lib/site-packages"
+  ],
+  "python.autoComplete.extraPaths": [
+    "${workspaceFolder}",
+    "C:/Users/study/AppData/Roaming/Python/Python310/site-packages",
+    "C:/Program Files/Python310/lib/site-packages"
+  ],
+  "pyrefly.pythonPath": "C:\\Program Files\\Python310\\python.exe",
+  "pyrefly.interpreter": "C:\\Program Files\\Python310\\python.exe"
+}
